@@ -1,5 +1,4 @@
-from abc import ABC
-from abstraction.IPostgreConnector import IPostgreConnector
+from src.abstraction.IPostgreConnector import IPostgreConnector
 
 import psycopg2
 
@@ -17,9 +16,9 @@ class PostgreConnector(IPostgreConnector):
         self.username=username
         self.psw=psw
 
-    def openConnection(self, addr: str, port: str, dbName: str, username:str, psw: str) -> psycopg2.extensions.connection | None:
+    def openConnection(self) -> psycopg2.extensions.connection | None:
         try:
-            return psycopg2.connect(dbname=dbName,user=username,password=psw,host=addr,port=port)
+            return psycopg2.connect(dbname=self.dbName,user=self.username,password=self.psw,host=self.addr,port=self.port)
         except (psycopg2.DatabaseError,Exception) as err:
             print(err)
             return None
@@ -28,7 +27,7 @@ class PostgreConnector(IPostgreConnector):
         query: str = "UPDATE NumberTable SET number=(%s) WHERE NumberIndex=0"
 
         
-        conn: psycopg2.extensions.connection | None = self.openConnection(self.addr,self.port,self.dbName,self.username,self.psw)
+        conn: psycopg2.extensions.connection | None = self.openConnection()
 
         if (conn is None):
             return None
@@ -46,7 +45,7 @@ class PostgreConnector(IPostgreConnector):
     def getNumber(self) -> int | None:
         query: str = "SELECT Number FROM NumberTable WHERE NumberIndex=0"
         
-        conn: psycopg2.extensions.connection | None = self.openConnection(self.addr,self.port,self.dbName,self.username,self.psw)
+        conn: psycopg2.extensions.connection | None = self.openConnection()
 
         if (conn is None):
             return None

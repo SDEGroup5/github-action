@@ -3,7 +3,7 @@ import psycopg2
 
 class IPostgreConnector():
     @abstractmethod
-    def openConnection(self, addr: str, port: str, dbName: str, username:str, psw: str) -> psycopg2.extensions.connection  | None:
+    def openConnection(self) -> psycopg2.extensions.connection | None:
         '''Implement connection method. Should return postgre connection object. Should return the connection if connection was succesfull, otherwise None'''
 
     @abstractmethod
