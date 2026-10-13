@@ -1,3 +1,4 @@
+[![Quality & Formatting Checks](https://github.com/SDEGroup5/github-actions/actions/workflows/linting.yml/badge.svg)](https://github.com/SDEGroup5/github-actions/actions/workflows/linting.yml)
 # Github Actions
 A project to show how Github Action works.
 
