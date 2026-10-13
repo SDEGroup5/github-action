@@ -9,13 +9,13 @@ ruff check
 
 # 2. Run yapf code formatting
 echo "🧹 Running yapf auto-formatter..."
-yapf --in-place --parallel --recursive */*/*.py
+yapf --in-place --parallel --recursive backend/*/* frontend/*/*
 
 # 3. Run pylint and verify score >= THRESHOLD
 echo "🔍 Running pylint..."
 
 set +e
-PYLINT_OUTPUT=$(PYTHONPATH="$(pwd)${PYTHONPATH:+:$PYTHONPATH}" pylint -r y */*/*.py)
+PYLINT_OUTPUT=$(PYTHONPATH="$(pwd)${PYTHONPATH:+:$PYTHONPATH}" pylint -r y backend frontend)
 set -e
 
 echo "$PYLINT_OUTPUT"
