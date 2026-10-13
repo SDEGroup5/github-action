@@ -1,0 +1,38 @@
+[project]
+name = "github-action"
+version = "0.0.1"
+description = "A project to show how Github Action works."
+authors = [
+    {name = "LorenzoCaraffini"},
+    {name = "FilizZPalm"},
+    {name = "ozneroL541"},
+    {name = "Oziator"},
+    {name = "FireStoat3"}
+]
+license = "GNU GPLv3"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+packages = [
+    {include = "backend"},
+    {include = "frontend"},
+]
+
+[tool.ruff]
+line-length = 100
+
+
+[tool.ruff.lint]
+select = ["E", "F", "UP", "I", "N"]
+
+[tool.pytest.ini_options]
+pythonpath = ["backend/src"]
+testpaths = ["backend/test/*.py"]

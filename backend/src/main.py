@@ -1,11 +1,22 @@
-from abstraction.IPostgreConnector import IPostgreConnector
-from postgreConnector import PostgreConnector
+"""
+Main file
+"""
+
+from abstraction.i_postgre_connector import IPostgreConnector
+from postgre_connector import PostgreConnector
+
 
 def main():
-    connector: IPostgreConnector = PostgreConnector("localhost","5432","TheDatabase","myuser","secret_password")
+    """Main function for testing purposes."""
 
-    connector.writeNumber(3);
-    print(connector.getNumber())
+    connector: IPostgreConnector = PostgreConnector("localhost", "5432",
+                                                    "TheDatabase", "myuser",
+                                                    "secret_password")
+
+    connector.write_number(3)
+
+    print(connector.get_number())
+
 
 if __name__ == "__main__":
     main()
