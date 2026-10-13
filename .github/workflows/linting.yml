@@ -32,12 +32,12 @@ jobs:
 
       - name: Check yapf formatting
         run: |
-          yapf --in-place --parallel --recursive */*/*.py
+          yapf --in-place --parallel --recursive backend/*/* frontend/*/*
           git diff --exit-code
 
       - name: Check pylint score
         run: |
-          PYLINT_OUTPUT=$(PYTHONPATH=. pylint -r y */*/*.py) || true
+          PYLINT_OUTPUT=$(PYTHONPATH=. pylint -r y backend frontend) || true
           THRESHOLD=9.95
           echo "$PYLINT_OUTPUT"
           
