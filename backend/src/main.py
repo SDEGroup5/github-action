@@ -2,8 +2,8 @@
 Main file
 """
 
-from abstraction.i_postgre_connector import IPostgreConnector
-from postgre_connector import PostgreConnector
+from src.abstraction.i_postgre_connector import IPostgreConnector
+from src.postgre_connector import PostgreConnector
 
 
 def main():

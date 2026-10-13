@@ -3,7 +3,7 @@ This module contains the PostgreConnector class, which implements the IPostgreCo
 """
 
 import psycopg2  # pylint: disable=import-error
-from abstraction.i_postgre_connector import IPostgreConnector
+from src.abstraction.i_postgre_connector import IPostgreConnector
 
 
 class PostgreConnector(IPostgreConnector):

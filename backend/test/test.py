@@ -4,8 +4,8 @@ This module contain the test for the PostgreConnector class
 from unittest.mock import MagicMock, patch
 
 import psycopg2
-from abstraction.i_postgre_connector import IPostgreConnector
-from postgre_connector import PostgreConnector
+from src.abstraction.i_postgre_connector import IPostgreConnector
+from src.postgre_connector import PostgreConnector
 
 
 def test_db_connection_success():
@@ -18,7 +18,7 @@ def test_db_connection_success():
 
     mock_connection_object = MagicMock()
 
-    with patch("postgre_connector.psycopg2.connect",
+    with patch("src.postgre_connector.psycopg2.connect",
                return_value=mock_connection_object) as mock_connection:
 
         result = connector.open_connection()
@@ -39,7 +39,7 @@ def test_db_connection_failure():
                                                     "TheDatabase", "myuser",
                                                     "secret_password")
 
-    with patch("postgre_connector.psycopg2.connect",
+    with patch("src.postgre_connector.psycopg2.connect",
                side_effect=psycopg2.OperationalError(
                    "Failed to connect to database")) as mock_connection:
         result = connector.open_connection()

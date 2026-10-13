@@ -34,5 +34,5 @@ line-length = 100
 select = ["E", "F", "UP", "I", "N"]
 
 [tool.pytest.ini_options]
-pythonpath = ["backend/src"]
+pythonpath = ["backend/"]
 testpaths = ["backend/test/*.py"]
