@@ -3,7 +3,7 @@ This module contain the test for the PostgreConnector class
 """
 from unittest.mock import MagicMock, patch
 
-import psycopg2
+import psycopg2  # pylint: disable=import-error
 from src.abstraction.i_postgre_connector import IPostgreConnector
 from src.postgre_connector import PostgreConnector
 

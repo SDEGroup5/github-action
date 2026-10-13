@@ -4,7 +4,7 @@ Has IPostgreConnector interface, which allow connection and operation to the pos
 
 from abc import ABC, abstractmethod
 
-import psycopg2
+import psycopg2  # pylint: disable=import-error
 
 
 class IPostgreConnector(ABC):
