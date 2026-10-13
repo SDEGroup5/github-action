@@ -9,15 +9,17 @@ on:
 jobs:
   code-quality:
     runs-on: ubuntu-latest
-
+    strategy:
+      matrix:
+        python-version: ["3.14"]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
+          python-version: ${{ matrix.python-version }}
 
       - name: Install dependencies
         run: |
@@ -31,7 +33,7 @@ jobs:
       - name: Check yapf formatting
         run: |
           yapf --in-place --parallel --recursive */*/*.py
-          git diff --exit-code || (echo "❌ Code is not formatted according to yapf. Please run yapf locally." && exit 1)
+          git diff --exit-code
 
       - name: Check pylint score
         run: |
@@ -42,11 +44,9 @@ jobs:
           SCORE=$(echo "$PYLINT_OUTPUT" | awk -F'rated at ' '/rated at/ {split($2, a, "/"); print a[1]}')
           
           if [ -z "$SCORE" ]; then
-            echo "❌ Could not parse pylint score."
             exit 1
           fi
           
           echo "Pylint score: $SCORE"
           
-          python3 -c "import sys; score=float(sys.argv[1]); sys.exit(0 if score >= $THRESHOLD else 1)" "$SCORE" || \
-          (echo "❌ Pylint score ($SCORE) is below $THRESHOLD threshold." && exit 1)
+          python3 -c "import sys; score=float(sys.argv[1]); sys.exit(0 if score >= $THRESHOLD else 1)" "$SCORE"
