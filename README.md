@@ -1,4 +1,4 @@
-# Github Action
+# Github Actions
 A project to show how Github Action works.
 
 ## Authors
