@@ -1,19 +1,33 @@
+"""
+Placeholder
+"""
+
 from abc import ABC, abstractmethod
+
 import psycopg2
 
-class IPostgreConnector():
-    @abstractmethod
-    def openConnection(self, addr: str, port: str, dbName: str, username:str, psw: str) -> psycopg2.extensions.connection  | None:
-        '''Implement connection method. Should return postgre connection object. Should return the connection if connection was succesfull, otherwise None'''
+
+class IPostgreConnector(ABC):
 
     @abstractmethod
-    def writeNumber(self, number: int) -> int | None:
-        '''Write the specified number to the database. Should return the number itself if it was written, otherwise None'''
+    def open_connection(self, addr: str, port: str, db_name: str, username: str,
+                       psw: str) -> psycopg2.extensions.connection | None:
+        '''Implement connection method.
+
+        Should return the connection if successful, otherwise None.
+        '''
 
     @abstractmethod
-    def getNumber(self) -> int | None:
-        '''Return the number from the database. If not succesfull, None should be returned instead'''
+    def write_number(self, number: int) -> int | None:
+        '''Write the specified number to the database.
+
+        Should return the number itself if it was written, otherwise None.
+        '''
 
     @abstractmethod
-    def closeConnection(self, conn: psycopg2.extensions.connection) -> bool:
-        '''Should return true if connection was succesfully closed, false otherwise'''
+    def get_number(self) -> int | None:
+        '''Return the number from the database, or None if unsuccessful.'''
+
+    @abstractmethod
+    def close_connection(self, conn: psycopg2.extensions.connection) -> bool:
+        '''Return True if the connection was successfully closed, otherwise False.'''
