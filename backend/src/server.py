@@ -96,7 +96,7 @@ class Server(BaseHTTPRequestHandler):
         else:
             self.send_json({"error": "Not found"}, 404)
 
-    def send_json(self, data, status):
+    def send_json(self, data: dict, status: int):
         '''
         Helper function: send a JSON structured answer
         '''
