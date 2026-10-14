@@ -2,7 +2,27 @@
 # Github Actions
 A project to show how Github Action works.
 
-Requires packages python3-dev libpq-dev for having the python venv
+## Project setup requirements
+
+Make sure to have the following dependencies installed on the system: `python3-dev`, `libpq-dev`
+
+Run the make file with:
+
+```sh
+make init
+```
+
+Then enter the Python Virtual Environment with:
+
+```sh
+source .venv/bin/activate
+```
+
+Finally, install the `backend` dependencies with:
+
+```sh
+pip install -r backend/requirements.txt
+```
 
 ## Authors
 - Caraffini Lorenzo @LorenzoCaraffini
@@ -11,7 +31,7 @@ Requires packages python3-dev libpq-dev for having the python venv
 - Schievano Matteo @FireStoat3
 - Stanicel David @Oziator
 
-## Licese
+## License
 Copyright (C) 2026  Caraffini Lorenzo, Palmieri Filippo, Radice Lorenzo, Schievano Matteo, Stanicel David
 
 This program is free software: you can redistribute it and/or modify

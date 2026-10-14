@@ -1,5 +1,5 @@
 """
-Has IPostgreConnector interface, which allow connection and operation to the postgresql database
+Contains IPostgreConnector interface, allowing connection and operation to the postgresql
 """
 
 from abc import ABC, abstractmethod
