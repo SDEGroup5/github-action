@@ -9,7 +9,7 @@ from http.client import HTTPConnection, HTTPResponse
 from http.server import HTTPServer
 from unittest.mock import MagicMock, patch
 
-import psycopg2
+import psycopg2  # pylint: disable=import-error
 import pytest  # pylint: disable=import-error
 from src.abstraction.i_postgre_connector import IPostgreConnector
 from src.abstraction.i_server_handler import IServerHandler
