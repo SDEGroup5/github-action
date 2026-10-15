@@ -4,7 +4,14 @@ A project to show how Github Action works.
 
 ## Project setup requirements
 
-Make sure to have the following dependencies installed on the system: `python3-dev`, `libpq-dev`
+Make sure to have the following dependencies installed on the system: `python3-dev`, `libpq-dev`.
+
+In case of problems regarding the `psycopg2` package, you can install the compiled binary instead.
+In such case, run this command to change the `requirements.txt` file:
+
+```sh
+sed -i '/psycopg2==2\.9\.13/c\psycopg2-binary==2.9.13' requirements.txt
+```
 
 Run the make file with:
 
@@ -16,12 +23,6 @@ Then enter the Python Virtual Environment with:
 
 ```sh
 source .venv/bin/activate
-```
-
-Finally, install the `backend` dependencies with:
-
-```sh
-pip install -r backend/requirements.txt
 ```
 
 ## Authors
