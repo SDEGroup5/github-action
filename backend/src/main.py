@@ -5,7 +5,7 @@ Main file
 from functools import partial
 from http.server import HTTPServer
 
-from dotenv import dotenv_values
+from dotenv import dotenv_values  # pylint: disable=import-error
 from src.abstraction.i_postgre_connector import IPostgreConnector
 from src.abstraction.i_server_handler import IServerHandler
 from src.postgre_connector import PostgreConnector
