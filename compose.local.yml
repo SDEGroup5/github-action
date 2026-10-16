@@ -9,6 +9,10 @@ services:
         - "5000:5000"
         networks:
         - github-action-network
+        secrets:
+            - my_secret
+        depends_on:
+            - database
     
     frontend:
         build:
