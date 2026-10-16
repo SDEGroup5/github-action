@@ -3,6 +3,9 @@ name: Quality Checks
 on:
   push
 
+permissions:
+  contents: read
+
 jobs:
   code-quality:
     runs-on: ubuntu-latest
