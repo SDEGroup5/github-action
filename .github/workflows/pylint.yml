@@ -24,10 +24,14 @@ jobs:
 
       - name: Lint Backend
         working-directory: backend
+        env:
+          PYTHONPATH: ${{ github.workspace }}/backend
         run: |
           pylint $(git ls-files '*.py')
 
       - name: Lint Frontend
         working-directory: frontend
+        env:
+          PYTHONPATH: ${{ github.workspace }}/frontend
         run: |
           pylint $(git ls-files '*.py')

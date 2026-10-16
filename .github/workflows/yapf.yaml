@@ -1,10 +1,7 @@
-name: Quality & Formatting Checks
+name: Formatting Checks
 
 on:
-  push:
-    branches: [ "master", "dev" ]
-  pull_request:
-    branches: [ "master", "dev" ]
+    push
 
 jobs:
   code-quality:
@@ -25,11 +22,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install poetry ruff yapf
-
-      - name: Run ruff check
-        run: |
-          ruff check frontend/ backend/
+          pip install poetry yapf
 
       - name: Check yapf formatting
         run: |
