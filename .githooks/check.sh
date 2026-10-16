@@ -23,7 +23,7 @@ if [ -z "$SCORE" ]; then
 fi
 # Compare score against THRESHOLD using Python
 PASSED=$(python3 -c "import sys; print(1 if float(sys.argv[1]) >= float(sys.argv[2]) else 0)" "$SCORE" "$THRESHOLD")
-if [ "$PASSED" -neq 1 ]; then
+if [ "$PASSED" -ne 1 ]; then
     echo "Commit rejected: Pylint score ($SCORE) is below $THRESHOLD threshold."
     exit 1
 fi
