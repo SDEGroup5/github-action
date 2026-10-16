@@ -1,3 +1,5 @@
+"""Main file"""
+
 import os
 from functools import partial
 from http.server import HTTPServer
