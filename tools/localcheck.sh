@@ -1,10 +1,14 @@
 #!/bin/bash
 
+set -euo pipefail
+
 DEBUG=1
 
 # Linux or macOS
 _KERNEL=$(uname -s)
 _ARCH=$(uname -m)
+
+WORKFLOW_DIR=".github/workflows"
 
 if [[ "$_KERNEL" == "Linux" ]]; then
     KERNEL="linux"
@@ -26,6 +30,12 @@ fi
 
 CONTAINER_ARCH="${KERNEL}/${ARCH}"
 
-act --container-architecture ${CONTAINER_ARCH} \
-    -P self-hosted=catthehacker/ubuntu:act-24.04 \
-    --workflows ".github/workflows/release.yaml"
+WORKFLOW_FILES=$(find "$WORKFLOW_DIR" -name "*.yml" -o -name "*.yaml")
+
+for workflow_file in $WORKFLOW_FILES; do
+    act --container-architecture ${CONTAINER_ARCH} \
+        -P self-hosted=catthehacker/ubuntu:act-24.04 \
+        --actor nektos/act \
+        --env ACT=true \
+        --workflows "$workflow_file"
+done
