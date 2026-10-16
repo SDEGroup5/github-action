@@ -44,6 +44,6 @@ jobs:
       - name: Build and push image
         uses: docker/build-push-action@v5
         with:
-          context: ./backend
+          context: ./backend/Dockerfile.backend
           push: true
           tags: ghcr.io/${{ steps.image-version.outputs.image_repository }}/backend:${{ steps.image-version.outputs.image_version }}

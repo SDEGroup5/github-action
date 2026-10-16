@@ -1,4 +1,4 @@
-name: frontend Docker Image
+name: Frontend Docker Image
 
 on:
   push:
@@ -33,15 +33,17 @@ jobs:
         # If it's a release, use the tag as the version,
         # otherwise use the short SHA of the commit
         run: |
-          if [ -n "$GITHUB_TAG" ]; then
-            echo "IMAGE_VERSION=$GITHUB_TAG" >> $GITHUB_ENV
+          image_repository=$(echo "$GITHUB_REPOSITORY" | tr '[:upper:]' '[:lower:]')
+          echo "image_repository=$image_repository" >> "$GITHUB_OUTPUT"
+          if [ "$GITHUB_EVENT_NAME" = "release" ]; then
+            echo "image_version=$GITHUB_REF_NAME" >> "$GITHUB_OUTPUT"
           else
-            echo "IMAGE_VERSION=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+            echo "image_version=$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
           fi
         
       - name: Build and push image
         uses: docker/build-push-action@v5
         with:
-          context: ./frontend
+          context: ./frontend/Dockerfile.frontend
           push: true
-          tags: ghcr.io/${{ github.repository }}/frontend:${{ env.IMAGE_VERSION }}
+          tags: ghcr.io/${{ steps.image-version.outputs.image_repository }}/frontend:${{ steps.image-version.outputs.image_version }}
