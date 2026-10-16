@@ -33,6 +33,7 @@ jobs:
         # If it's a release, use the tag as the version,
         # otherwise use the short SHA of the commit
         run: |
+          echo "IMAGE_REPOSITORY=$(echo "$GITHUB_REPOSITORY" | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_ENV"
           if [ -n "$GITHUB_TAG" ]; then
             echo "IMAGE_VERSION=$GITHUB_TAG" >> $GITHUB_ENV
           else
@@ -44,4 +45,4 @@ jobs:
         with:
           context: ./backend
           push: true
-          tags: ghcr.io/${{ github.repository }}/backend:${{ env.IMAGE_VERSION }}
+          tags: ghcr.io/${IMAGE_REPOSITORY}/backend:${IMAGE_VERSION}
