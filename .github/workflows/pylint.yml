@@ -22,6 +22,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install pylint
 
-      - name: Analysing the code with pylint
+      - name: Lint Backend
+        working-directory: backend
+        run: |
+          pylint $(git ls-files '*.py')
+
+      - name: Lint Frontend
+        working-directory: frontend
         run: |
           pylint $(git ls-files '*.py')

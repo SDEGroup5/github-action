@@ -33,5 +33,5 @@ jobs:
 
       - name: Check yapf formatting
         run: |
-          yapf --in-place --parallel --recursive $(find . -type f -name "*.py" ! -path "./.venv/*" ! -path "./venv/*")
+          yapf --in-place --parallel --recursive $(find . -type f -name "*.py" ! -path "./.venv/*")
           git diff --exit-code

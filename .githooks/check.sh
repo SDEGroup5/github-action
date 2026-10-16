@@ -8,7 +8,7 @@ echo "Running ruff check..."
 ruff check
 
 echo "Running yapf..."
-yapf --in-place --parallel --recursive $(find . -type f -name "*.py" ! -path "./.venv/*" ! -path "./venv/*")
+yapf --in-place --parallel --recursive $(find . -type f -name "*.py" ! -path "./.venv/*")
 
 echo "Running pylint..."
 set +e
