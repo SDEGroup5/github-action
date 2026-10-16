@@ -52,7 +52,8 @@ class PostgreConnector(IPostgreConnector):
             return None
 
         try:
-            conn.cursor().execute(query, (str(number)))
+            conn.cursor().execute(query, (number, ))
+            conn.commit()
             return number
         except (Exception, psycopg2.DatabaseError) as error:  # pylint: disable=broad-except
             print(error)
