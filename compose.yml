@@ -1,9 +1,6 @@
 services:
     backend:
-        build:
-            context: ./backend
-            dockerfile: Dockerfile.backend
-        image: backend:latest
+        image: ghcr.io/SDEGroup5/github-actions/backend:latest
         container_name: backend
         ports:
         - "5000:5000"
@@ -11,10 +8,7 @@ services:
         - github-action-network
     
     frontend:
-        build:
-            context: ./frontend
-            dockerfile: Dockerfile.frontend
-        image: frontend:latest
+        image: ghcr.io/SDEGroup5/github-actions/frontend:latest
         container_name: frontend
         ports:
         - "3000:3000"
