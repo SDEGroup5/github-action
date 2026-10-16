@@ -1,6 +1,6 @@
 services:
     backend:
-        image: ghcr.io/SDEGroup5/github-actions/backend:latest
+        image: ghcr.io/sdegroup5/github-actions/backend:latest
         container_name: backend
         ports:
         - "5000:5000"
@@ -8,7 +8,7 @@ services:
         - github-action-network
     
     frontend:
-        image: ghcr.io/SDEGroup5/github-actions/frontend:latest
+        image: ghcr.io/sdegroup5/github-actions/frontend:latest
         container_name: frontend
         ports:
         - "3000:3000"
