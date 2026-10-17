@@ -4,9 +4,9 @@ from functools import partial
 from http.server import HTTPServer
 
 from dotenv import dotenv_values  # pylint: disable=import-error
-from src.abstraction.i_postgre_connector import IPostgreConnector
+from src.abstraction.i_postgres_connector import IPostgresConnector
 from src.abstraction.i_server_handler import IServerHandler
-from src.postgre_connector import PostgreConnector
+from src.postgres_connector import PostgresConnector
 from src.server import Server
 from src.server_handler import ServerHandler
 
@@ -20,8 +20,8 @@ def main():
     psw: str = str(config.get("POSTGRES_PASSWORD", "secret_password"))
     db_name: str = str(config.get("POSTGRES_DB", "TheDatabase"))
 
-    connector: IPostgreConnector = PostgreConnector("database", "5432",
-                                                    db_name, username, psw)
+    connector: IPostgresConnector = PostgresConnector("database", "5432",
+                                                      db_name, username, psw)
 
     server_handler: IServerHandler = ServerHandler(connector)
 
