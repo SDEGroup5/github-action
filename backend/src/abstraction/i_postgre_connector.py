@@ -34,3 +34,7 @@ class IPostgreConnector(ABC):
     @abstractmethod
     def close_connection(self, conn: psycopg2.extensions.connection) -> bool:
         '''Return True if the connection was successfully closed, otherwise False.'''
+
+    @abstractmethod
+    def create_db(self, db_name: str) -> bool:
+        '''Return True if the database and table are initialized successfully'''

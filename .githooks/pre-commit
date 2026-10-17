@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-#SRC="frontend/ backend/"
+SRC="frontend/ backend/"
 
 # Use local tools if available
 if command -v ruff &> /dev/null && command -v yapf &> /dev/null && command -v pylint &> /dev/null; then
     echo "Running checks using local Python tools..."
     .githooks/check.sh
-    #git add $SRC
+    git add $SRC
     exit 0
 fi
 
@@ -22,7 +22,7 @@ if command -v docker &> /dev/null; then
     # Mount repo root, install dependencies, and execute check.sh
     docker run --rm -v "$(pwd)":/workspace -w /workspace repo-linter bash .githooks/check.sh
     # Re-stage files formatted by yapf inside Docker
-    #git add $SRC
+    git add $SRC
     exit 0
 fi
 

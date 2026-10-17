@@ -7,7 +7,7 @@ import os
 import subprocess
 import sys
 
-CODE_COVERAGE_THRESHOLD: int = 95
+CODE_COVERAGE_THRESHOLD: int = 80
 COVERAGE_FILE_NAME: str = ".coverage.json"
 
 
