@@ -28,7 +28,7 @@ packages = [
 
 [tool.ruff]
 line-length = 100
-
+include = ["backend/**/*.py", "frontend/**/*.py"]
 
 [tool.ruff.lint]
 select = ["E", "F", "UP", "I", "N"]
