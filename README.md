@@ -11,7 +11,7 @@
 
 [![Backend Docker Image](https://github.com/SDEGroup5/github-actions/actions/workflows/backend-image.yml/badge.svg?event=registry_package)](https://github.com/SDEGroup5/github-actions/actions/workflows/backend-image.yml)
 
-[![Frontend Docker Image](https://github.com/SDEGroup5/github-actions/actions/workflows/frontend.yml/badge.svg?event=registry_package)](https://github.com/SDEGroup5/github-actions/actions/workflows/frontend.yml)
+[![Frontend Docker Image](https://github.com/SDEGroup5/github-actions/actions/workflows/frontend-image.yml/badge.svg?event=registry_package)](https://github.com/SDEGroup5/github-actions/actions/workflows/frontend.yml)
 
 # Github Actions
 A project to show how Github Action works.

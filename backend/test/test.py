@@ -274,6 +274,7 @@ def test_db_write_number_failure_on_writing():
                                             password="secret_password",
                                             host="localhost",
                                             port="5432")
+    mock_connection_object.commit.assert_not_called()
 
 
 def test_db_write_number_successful():
@@ -304,7 +305,10 @@ def test_db_write_number_successful():
 
     assert result == value_to_write
 
-    mock_connection_object.cursor.return_value.execute.assert_called_once()
+    mock_connection_object.cursor.return_value.execute.assert_called_once_with(
+        "UPDATE NumberTable SET number=(%s) WHERE NumberIndex=0",
+        (value_to_write, ))
+    mock_connection_object.commit.assert_called_once_with()
     mock_connection.assert_called_once_with(dbname="TheDatabase",
                                             user="myuser",
                                             password="secret_password",
