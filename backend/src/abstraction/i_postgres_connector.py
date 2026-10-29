@@ -1,5 +1,5 @@
 """
-Contains IPostgreConnector interface, allowing connection and operation to the postgresql
+Contains IPostgresConnector interface, allowing connection and operation to the postgresql
 """
 
 from abc import ABC, abstractmethod
@@ -7,9 +7,9 @@ from abc import ABC, abstractmethod
 import psycopg2  # pylint: disable=import-error
 
 
-class IPostgreConnector(ABC):
+class IPostgresConnector(ABC):
     '''
-    IPostgreConnector interface, which allow connection and operation to the postgresql database
+    IPostgresConnector interface, which allow connection and operation to the postgresql database
     '''
 
     @abstractmethod

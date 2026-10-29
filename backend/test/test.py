@@ -11,9 +11,9 @@ from unittest.mock import MagicMock, patch
 
 import psycopg2  # pylint: disable=import-error
 import pytest  # pylint: disable=import-error
-from src.abstraction.i_postgre_connector import IPostgreConnector
+from src.abstraction.i_postgres_connector import IPostgresConnector
 from src.abstraction.i_server_handler import IServerHandler
-from src.postgre_connector import PostgreConnector
+from src.postgres_connector import PostgresConnector
 from src.server import Server
 from src.server_handler import ServerHandler
 
@@ -26,9 +26,9 @@ def test_create_db_success():
     start
     '''
 
-    with patch("src.postgre_connector.PostgreConnector.create_db",
+    with patch("src.postgres_connector.PostgresConnector.create_db",
                return_value=True):
-        connector: IPostgreConnector = PostgreConnector(
+        connector: IPostgresConnector = PostgresConnector(
             "localhost", "5432", "TheDatabase", "myuser", "secret_password")
 
     mock_connection_1 = MagicMock()
@@ -67,9 +67,9 @@ def test_create_db_first_connection_fails():
     Test if the create_db function returns False if the first 
     connection fails
     '''
-    with patch("src.postgre_connector.PostgreConnector.create_db",
+    with patch("src.postgres_connector.PostgresConnector.create_db",
                return_value=True):
-        connector: IPostgreConnector = PostgreConnector(
+        connector: IPostgresConnector = PostgresConnector(
             "localhost", "5432", "TheDatabase", "myuser", "secret_password")
 
     with patch.object(connector, "open_connection",
@@ -86,9 +86,9 @@ def test_create_db_second_connection_fails():
     Test if the create_db function returns False if the second 
     connection fails
     '''
-    with patch("src.postgre_connector.PostgreConnector.create_db",
+    with patch("src.postgres_connector.PostgresConnector.create_db",
                return_value=True):
-        connector: IPostgreConnector = PostgreConnector(
+        connector: IPostgresConnector = PostgresConnector(
             "localhost", "5432", "TheDatabase", "myuser", "secret_password")
 
     mock_connection_1 = MagicMock()
@@ -116,9 +116,9 @@ def test_create_db_database_creation_error():
     Test if the create_db function return False if the
     database cannot be created
     '''
-    with patch("src.postgre_connector.PostgreConnector.create_db",
+    with patch("src.postgres_connector.PostgresConnector.create_db",
                return_value=True):
-        connector: IPostgreConnector = PostgreConnector(
+        connector: IPostgresConnector = PostgresConnector(
             "localhost", "5432", "TheDatabase", "myuser", "secret_password")
 
     mock_connection = MagicMock()
@@ -144,9 +144,9 @@ def test_create_db_table_creation_fails():
     Test if the create_db function return False if the
     database is created, but not the table
     '''
-    with patch("src.postgre_connector.PostgreConnector.create_db",
+    with patch("src.postgres_connector.PostgresConnector.create_db",
                return_value=True):
-        connector: IPostgreConnector = PostgreConnector(
+        connector: IPostgresConnector = PostgresConnector(
             "localhost", "5432", "TheDatabase", "myuser", "secret_password")
 
     mock_connection_1 = MagicMock()
@@ -179,14 +179,14 @@ def test_db_connection_success():
     '''
     Test if a successful database connection is handled correctly
     '''
-    with patch("src.postgre_connector.PostgreConnector.create_db",
+    with patch("src.postgres_connector.PostgresConnector.create_db",
                return_value=True):
-        connector: IPostgreConnector = PostgreConnector(
+        connector: IPostgresConnector = PostgresConnector(
             "localhost", "5432", "TheDatabase", "myuser", "secret_password")
 
     mock_connection_object = MagicMock()
 
-    with patch("src.postgre_connector.psycopg2.connect",
+    with patch("src.postgres_connector.psycopg2.connect",
                return_value=mock_connection_object) as mock_connection:
 
         result = connector.open_connection()
@@ -203,12 +203,12 @@ def test_db_connection_failure():
     '''
     Test if a unsuccessful database connection is handled correctly
     '''
-    with patch("src.postgre_connector.PostgreConnector.create_db",
+    with patch("src.postgres_connector.PostgresConnector.create_db",
                return_value=True):
-        connector: IPostgreConnector = PostgreConnector(
+        connector: IPostgresConnector = PostgresConnector(
             "localhost", "5432", "TheDatabase", "myuser", "secret_password")
 
-    with patch("src.postgre_connector.psycopg2.connect",
+    with patch("src.postgres_connector.psycopg2.connect",
                side_effect=psycopg2.OperationalError(
                    "Failed to connect to database")) as mock_connection:
         result = connector.open_connection()
@@ -223,18 +223,18 @@ def test_db_connection_failure():
 
 def test_db_write_number_failure_on_connection():
     '''
-    Test whether the postgre connector is correctly handling a read
+    Test whether the Postgres connector is correctly handling a read
     request when the connection to the database was not successful
     '''
 
     value_to_write: int = 1
 
-    with patch("src.postgre_connector.PostgreConnector.create_db",
+    with patch("src.postgres_connector.PostgresConnector.create_db",
                return_value=True):
-        connector: IPostgreConnector = PostgreConnector(
+        connector: IPostgresConnector = PostgresConnector(
             "localhost", "5432", "TheDatabase", "myuser", "secret_password")
 
-    with patch("src.postgre_connector.psycopg2.connect",
+    with patch("src.postgres_connector.psycopg2.connect",
                side_effect=psycopg2.OperationalError(
                    "Failed to connect to database")) as mock_connection:
         result = connector.write_number(value_to_write)
@@ -249,14 +249,14 @@ def test_db_write_number_failure_on_connection():
 
 def test_db_write_number_failure_on_writing():
     '''
-    Test whether the postgre connector is correctly able to ask the
+    Test whether the Postgres connector is correctly able to ask the
     database to write a number. The function should return None
     '''
     value_to_write: int = 1
 
-    with patch("src.postgre_connector.PostgreConnector.create_db",
+    with patch("src.postgres_connector.PostgresConnector.create_db",
                return_value=True):
-        connector: IPostgreConnector = PostgreConnector(
+        connector: IPostgresConnector = PostgresConnector(
             "localhost", "5432", "TheDatabase", "myuser", "secret_password")
 
     mock_connection_object = MagicMock()
@@ -264,7 +264,7 @@ def test_db_write_number_failure_on_writing():
     mock_connection_object.cursor.return_value.execute.side_effect = psycopg2.DatabaseError(
         "Error")
 
-    with patch("src.postgre_connector.psycopg2.connect",
+    with patch("src.postgres_connector.psycopg2.connect",
                return_value=mock_connection_object) as mock_connection:
         result = connector.write_number(value_to_write)
 
@@ -279,15 +279,15 @@ def test_db_write_number_failure_on_writing():
 
 def test_db_write_number_successful():
     '''
-    Test whether the postgre connector is correctly able to ask the
+    Test whether the Postgres connector is correctly able to ask the
     database to write a number. The function should return the same
     number that should be written
     '''
     value_to_write: int = 1
 
-    with patch("src.postgre_connector.PostgreConnector.create_db",
+    with patch("src.postgres_connector.PostgresConnector.create_db",
                return_value=True):
-        connector: IPostgreConnector = PostgreConnector(
+        connector: IPostgresConnector = PostgresConnector(
             "localhost",
             "5432",
             "TheDatabase",
@@ -299,14 +299,14 @@ def test_db_write_number_successful():
 
     mock_connection_object.cursor.return_value.execute.return_value = None
 
-    with patch("src.postgre_connector.psycopg2.connect",
+    with patch("src.postgres_connector.psycopg2.connect",
                return_value=mock_connection_object) as mock_connection:
         result = connector.write_number(value_to_write)
 
     assert result == value_to_write
 
     mock_connection_object.cursor.return_value.execute.assert_called_once_with(
-        "UPDATE NumberTable SET number=(%s) WHERE NumberIndex=0",
+        "UPDATE NumberTable SET Number=(%s) WHERE NumberIndex=1",
         (value_to_write, ))
     mock_connection_object.commit.assert_called_once_with()
     mock_connection.assert_called_once_with(dbname="TheDatabase",
@@ -318,14 +318,14 @@ def test_db_write_number_successful():
 
 def test_db_get_number_successful():
     '''
-    Test whether the postgre connector is able to correctly return
+    Test whether the Postgres connector is able to correctly return
     the value from the database. Suppose the current number is 1.
     '''
     desired_value: int = 1
 
-    with patch("src.postgre_connector.PostgreConnector.create_db",
+    with patch("src.postgres_connector.PostgresConnector.create_db",
                return_value=True):
-        connector: IPostgreConnector = PostgreConnector(
+        connector: IPostgresConnector = PostgresConnector(
             "localhost", "5432", "TheDatabase", "myuser", "secret_password")
 
     mock_connection_object = MagicMock()
@@ -335,7 +335,7 @@ def test_db_get_number_successful():
         desired_value, )
 
     # Patch of the connection still necessary
-    with patch("src.postgre_connector.psycopg2.connect",
+    with patch("src.postgres_connector.psycopg2.connect",
                return_value=mock_connection_object) as mock_connection:
         result = connector.get_number()
 
@@ -349,16 +349,16 @@ def test_db_get_number_successful():
 
 def test_db_get_number_failure_on_connection():
     '''
-    Test whether the postgre connector is able handle a reading with
+    Test whether the Postgres connector is able handle a reading with
     no connection.
     '''
 
-    with patch("src.postgre_connector.PostgreConnector.create_db",
+    with patch("src.postgres_connector.PostgresConnector.create_db",
                return_value=True):
-        connector: IPostgreConnector = PostgreConnector(
+        connector: IPostgresConnector = PostgresConnector(
             "localhost", "5432", "TheDatabase", "myuser", "secret_password")
 
-    with patch("src.postgre_connector.psycopg2.connect",
+    with patch("src.postgres_connector.psycopg2.connect",
                side_effect=psycopg2.OperationalError(
                    "Failed to connect to database")) as mock_connection:
         result = connector.get_number()
@@ -373,13 +373,13 @@ def test_db_get_number_failure_on_connection():
 
 def test_db_get_number_failure_on_reading():
     '''
-    Test whether the postgre connector is correctly able to ask the
+    Test whether the Postgres connector is correctly able to ask the
     database to write a number. The function should return None
     '''
 
-    with patch("src.postgre_connector.PostgreConnector.create_db",
+    with patch("src.postgres_connector.PostgresConnector.create_db",
                return_value=True):
-        connector: IPostgreConnector = PostgreConnector(
+        connector: IPostgresConnector = PostgresConnector(
             "localhost", "5432", "TheDatabase", "myuser", "secret_password")
 
     mock_connection_object = MagicMock()
@@ -387,7 +387,7 @@ def test_db_get_number_failure_on_reading():
     mock_cursor = mock_connection_object.cursor.return_value.__enter__.return_value
     mock_cursor.fetchone.side_effect = psycopg2.DatabaseError("Error")
 
-    with patch("src.postgre_connector.psycopg2.connect",
+    with patch("src.postgres_connector.psycopg2.connect",
                return_value=mock_connection_object) as mock_connection:
         result = result = connector.get_number()
 
@@ -401,12 +401,12 @@ def test_db_get_number_failure_on_reading():
 
 def test_db_get_number_failure_on_read_result():
     '''
-    Test whether the postgre connector is able handle a reading with no results.
+    Test whether the Postgres connector is able handle a reading with no results.
     '''
 
-    with patch("src.postgre_connector.PostgreConnector.create_db",
+    with patch("src.postgres_connector.PostgresConnector.create_db",
                return_value=True):
-        connector: IPostgreConnector = PostgreConnector(
+        connector: IPostgresConnector = PostgresConnector(
             "localhost", "5432", "TheDatabase", "myuser", "secret_password")
 
     mock_connection_object = MagicMock()
@@ -415,7 +415,7 @@ def test_db_get_number_failure_on_read_result():
     mock_connection_object.cursor.return_value.__enter__.return_value.fetchone.return_value = None
 
     # Patch of the connection still necessary
-    with patch("src.postgre_connector.psycopg2.connect",
+    with patch("src.postgres_connector.psycopg2.connect",
                return_value=mock_connection_object) as mock_connection:
         result = connector.get_number()
 

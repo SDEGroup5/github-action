@@ -15,7 +15,7 @@ class Server(BaseHTTPRequestHandler):
     """
     This class provides the endpoints that manages requests to the
     application logic (ServerHandler), which communicate with the 
-    Postgre connector
+    Postgres connector.
     """
 
     server_handler: IServerHandler
@@ -24,6 +24,16 @@ class Server(BaseHTTPRequestHandler):
                  server: BaseServer, server_handler: IServerHandler):
         self.server_handler = server_handler
         super().__init__(request, client_address, server)
+
+    def do_OPTIONS(self):  # pylint: disable=invalid-name
+        '''
+        Manages /OPTIONS. Necessary to make PUT work
+        '''
+        self.send_response(204)
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Methods", "GET, PUT, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type")
+        self.end_headers()
 
     def do_GET(self):  # pylint: disable=invalid-name
         '''
@@ -103,7 +113,8 @@ class Server(BaseHTTPRequestHandler):
         response: bytes = json.dumps(data).encode("utf-8")
         header: dict = {
             "Content-Type": "application/json",
-            "Content-Length": str(len(response))
+            "Content-Length": str(len(response)),
+            "Access-Control-Allow-Origin": "*"
         }
 
         self.send_response(status)

@@ -1,14 +1,14 @@
 """
-This module contains the PostgreConnector class, which implements the IPostgreConnector interface.
+This module contains the PostgresConnector class, which implements the IPostgreConnector interface.
 """
 
 from time import sleep
 
 import psycopg2  # pylint: disable=import-error
-from src.abstraction.i_postgre_connector import IPostgreConnector
+from src.abstraction.i_postgres_connector import IPostgresConnector
 
 
-class PostgreConnector(IPostgreConnector):
+class PostgresConnector(IPostgresConnector):
     """
     A class that implements the IPostgreConnector interface for connecting to a PostgreSQL database.
     """
